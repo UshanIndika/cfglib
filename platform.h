@@ -12,7 +12,7 @@ extern "C" {
 #if defined (UNIT_TEST)
 /* UNIT test stubs */
 
-inline void flash_erase(uint32_t sector_address)
+static inline void flash_erase(uint32_t sector_address)
 {
 	FILE* stream = NULL;
 
@@ -26,7 +26,7 @@ inline void flash_erase(uint32_t sector_address)
 	}
 }
 
-inline size_t flash_write(uint32_t address, size_t length, uint8_t *buffer)
+static inline size_t flash_write(uint32_t address, size_t length, uint8_t *buffer)
 {
 	FILE* stream = NULL;
 	size_t ret = 0;
@@ -44,7 +44,7 @@ inline size_t flash_write(uint32_t address, size_t length, uint8_t *buffer)
 	return ret;
 }
 
-inline size_t flash_read(uint32_t address, size_t length, uint8_t* buffer)
+static inline size_t flash_read(uint32_t address, size_t length, uint8_t* buffer)
 {
 	FILE* stream = NULL;
 	size_t ret = 0;
