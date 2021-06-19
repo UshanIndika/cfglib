@@ -7,7 +7,7 @@
 #define CONFIGURATION_MAGIC_NUMBER_SIZE      (4)
 #define CONFIGURATION_SECTOR_ADDRESS         (0x0cf50000)
 #define CONFIGURATION_FACTORY_SECTOR_ADDRESS (0x0fac0000)
-#define CFG_HEADR_SIZE (sizeof(((ww_config_t*)0)->type) +  sizeof(((ww_config_t*)0)->index) + sizeof(((ww_config_t*)0)->length))
+#define CFG_HEADR_SIZE                       (sizeof(((ww_config_t*)0)->type) +  sizeof(((ww_config_t*)0)->index) + sizeof(((ww_config_t*)0)->length))
 #define CFG_MAX_SERVER_NAME_BYTES            (128)
 
 enum
@@ -67,7 +67,7 @@ static uint32_t read_cfg(uint32_t store_address, ww_config_t* cfg)
 					{
 						// Read value
 						crc_len = flash_read(store_address + index + read, tmp_cfg.length, &cfg->value[0]);
-
+						// TODO: endianess conversion should be handled here
 						if (crc_len == tmp_cfg.length)
 						{
 							found = true;
@@ -127,6 +127,8 @@ uint32_t ww_cfg_write(ww_config_t* cfg, uint32_t* crc)
 {
 	uint32_t ret = CFG_FAILURE;
 	size_t written = 0;
+
+	// TODO: endianess conversion should be handled here
 
 	written  = flash_write(CONFIGURATION_SECTOR_ADDRESS, sizeof(cfg->type), (uint8_t*)&cfg->type);
 	written += flash_write(CONFIGURATION_SECTOR_ADDRESS, sizeof(cfg->index), (uint8_t*)&cfg->index);
